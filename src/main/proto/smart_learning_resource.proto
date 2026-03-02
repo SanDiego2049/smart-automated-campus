@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "generated.grpc.smartlearningresource";
+option java_outer_classname = "SmartLearningResourceServiceImpl";
+
+package SmartLearningResourceGrpc;
+
+// The SmartLearningResourceService manages digital and physical
+// academic resources within the smart campus.
+
+service SmartLearningResourceService {
+
+  // UNARY (SIMPLE RPC)
+  // Checks whether a specific resource is available.
+  rpc GetResourceAvailability(ResourceRequest) 
+      returns (ResourceStatus) {}
+
+  // SERVER STREAMING
+  // Streams all available resources within a given category.
+  rpc StreamAvailableResources(CategoryRequest) 
+      returns (stream ResourceInfo) {}
+}
+
+// Request to check a specific resource
+message ResourceRequest {
+  string resourceId = 1;
+}
+
+// Response indicating availability and location
+message ResourceStatus {
+  bool available = 1;
+  string location = 2;
+}
+
+// Request for resources within a category
+message CategoryRequest {
+  string category = 1;
+}
+
+// Information about a resource
+message ResourceInfo {
+  string title = 1;
+  string author = 2;
+  string format = 3;
+}
+

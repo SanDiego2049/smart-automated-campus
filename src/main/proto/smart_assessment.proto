@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "generated.grpc.smartassessment";
+option java_outer_classname = "SmartAssessmentServiceImpl";
+
+package SmartAssessmentGrpc;
+
+// The SmartAssessmentService manages digital examinations,
+// grading, and integrity monitoring.
+
+service SmartAssessmentService {
+
+  // UNARY (SIMPLE RPC)
+  // Retrieves details about a specific assessment.
+  rpc GetAssessmentDetails(AssessmentRequest) 
+      returns (AssessmentInfo) {}
+
+  // CLIENT STREAMING
+  // Streams multiple answers from a student exam submission
+  // and returns a final submission summary.
+  rpc SubmitAssessmentAnswers(stream AnswerSubmission) 
+      returns (SubmissionSummary) {}
+
+  // SERVER STREAMING
+  // Streams assessment results for administrative review.
+  rpc StreamAssessmentResults(ResultRequest) 
+      returns (stream StudentResult) {}
+
+  // BIDIRECTIONAL STREAMING
+  // Enables real-time exam monitoring and alert responses.
+  rpc LiveAssessmentMonitoring(stream StudentActivity) 
+      returns (stream MonitoringAlert) {}
+}
+
+// Request for assessment details
+message AssessmentRequest {
+  string assessmentId = 1;
+}
+
+// Response containing assessment information
+message AssessmentInfo {
+  string subject = 1;
+  int32 durationMinutes = 2;
+}
+
+// Message representing a student's answer submission
+message AnswerSubmission {
+  string questionId = 1;
+  string answerText = 2;
+}
+
+// Final submission summary
+message SubmissionSummary {
+  double totalScore = 1;
+}
+
+// Request to stream results
+message ResultRequest {
+  string assessmentId = 1;
+}
+
+// Result message per student
+message StudentResult {
+  string studentId = 1;
+  double score = 2;
+}
+
+// Activity message during monitoring
+message StudentActivity {
+  string activityType = 1;
+  string timestamp = 2;
+}
+
+// Alert response from monitoring system
+message MonitoringAlert {
+  string alertMessage = 1;
+}
+
