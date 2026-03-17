@@ -6,8 +6,7 @@ option java_outer_classname = "SmartLearningResourceServiceImpl";
 
 package SmartLearningResourceGrpc;
 
-// The SmartLearningResourceService manages digital and physical
-// academic resources within the smart campus.
+// The SmartLearningResourceService manages digital and physical academic resources within the smart campus.
 
 service SmartLearningResourceService {
 

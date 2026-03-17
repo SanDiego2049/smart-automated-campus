@@ -4,7 +4,7 @@
 package generated.grpc.smartclassroom;
 
 public final class SmartClassroomServiceImpl {
-  public SmartClassroomServiceImpl() {}
+  private SmartClassroomServiceImpl() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }

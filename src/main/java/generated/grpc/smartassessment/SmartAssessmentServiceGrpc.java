@@ -196,8 +196,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * CLIENT STREAMING
-     * Streams multiple answers from a student exam submission
-     * and returns a final submission summary.
+     * Streams multiple answers from a student exam submission and returns a final submission summary.
      * </pre>
      */
     public io.grpc.stub.StreamObserver<generated.grpc.smartassessment.AnswerSubmission> submitAssessmentAnswers(
@@ -294,8 +293,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * CLIENT STREAMING
-     * Streams multiple answers from a student exam submission
-     * and returns a final submission summary.
+     * Streams multiple answers from a student exam submission and returns a final submission summary.
      * </pre>
      */
     public io.grpc.stub.StreamObserver<generated.grpc.smartassessment.AnswerSubmission> submitAssessmentAnswers(

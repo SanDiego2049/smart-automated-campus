@@ -6,19 +6,16 @@ option java_outer_classname = "SmartClassroomServiceImpl";
 
 package SmartClassroomGrpc;
 
-// The SmartClassroomService manages intelligent classroom operations.
-// It simulates attendance collection and real-time lecture interaction.
+// The SmartClassroomService manages intelligent classroom operations. It simulates attendance collection and real-time lecture interaction.
 
 service SmartClassroomService {
 
   // CLIENT STREAMING
-  // Streams multiple attendance records from a classroom scanner
-  // and returns a summary once all students have been marked present.
+  // Streams multiple attendance records from a classroom scanner and returns a summary once all students have been marked present.
   rpc UploadAttendanceRecords(stream AttendanceRecord) returns (AttendanceSummary) {}
 
   // BIDIRECTIONAL STREAMING
-  // Enables real-time communication between students and lecturer
-  // during a live class session.
+  // Enables real-time communication between students and lecturer during a live class session.
   rpc LiveClassInteraction(stream StudentQuestion) returns (stream LecturerReply) {}
 
 }

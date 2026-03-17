@@ -6,8 +6,7 @@ option java_outer_classname = "SmartAssessmentServiceImpl";
 
 package SmartAssessmentGrpc;
 
-// The SmartAssessmentService manages digital examinations,
-// grading, and integrity monitoring.
+// The SmartAssessmentService manages digital examinations,grading and integrity monitoring.
 
 service SmartAssessmentService {
 
@@ -17,8 +16,7 @@ service SmartAssessmentService {
       returns (AssessmentInfo) {}
 
   // CLIENT STREAMING
-  // Streams multiple answers from a student exam submission
-  // and returns a final submission summary.
+  // Streams multiple answers from a student exam submission and returns a final submission summary.
   rpc SubmitAssessmentAnswers(stream AnswerSubmission) 
       returns (SubmissionSummary) {}
 
