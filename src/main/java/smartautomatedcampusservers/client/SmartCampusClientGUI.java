@@ -8,7 +8,6 @@ package smartautomatedcampusservers.client;
  *
  * @author Penelope
  */
-
 import generated.grpc.smartassessment.*;
 import generated.grpc.smartclassroom.*;
 import generated.grpc.smartlearningresource.*;
@@ -25,26 +24,24 @@ import javax.swing.*;
 import smartautomatedcampusservers.jmDNS.ServiceDiscovery;
 
 /**
- * Client GUI for Smart Automated Campus
- * Discovers and interacts with three gRPC services:
- * - SmartClassroomService
- * - SmartLearningResourceService
- * - SmartAssessmentService
+ * Client GUI for Smart Automated Campus Discovers and interacts with three gRPC
+ * services: - SmartClassroomService - SmartLearningResourceService -
+ * SmartAssessmentService
  */
 public class SmartCampusClientGUI extends JFrame {
 
     // Service discovery timeout
-    private static final long DISCOVERY_TIMEOUT = 10000; // 10 seconds
+    private static long discoveryTimeout = 10000;
 
     // Service types for discovery
-    private static final String CLASSROOM_SERVICE_TYPE = "_smartclassroom._tcp.local.";
-    private static final String RESOURCE_SERVICE_TYPE = "_smartlearningresource._tcp.local.";
-    private static final String ASSESSMENT_SERVICE_TYPE = "_smartassessment._tcp.local.";
+    private static String classroomServiceType = "_smartclassroom._tcp.local.";
+    private static String resourceServiceType = "_smartlearningresource._tcp.local.";
+    private static String assessmentServiceType = "_smartassessment._tcp.local.";
 
     // Service names
-    private static final String CLASSROOM_SERVICE_NAME = "SmartClassroomService";
-    private static final String RESOURCE_SERVICE_NAME = "SmartLearningResourceService";
-    private static final String ASSESSMENT_SERVICE_NAME = "SmartAssessmentService";
+    private static String classroomServiceName = "SmartClassroomService";
+    private static String resourceServiceName = "SmartLearningResourceService";
+    private static String assessmentServiceName = "SmartAssessmentService";
 
     // gRPC channels and stubs
     private ManagedChannel classroomChannel;
@@ -179,15 +176,15 @@ public class SmartCampusClientGUI extends JFrame {
         try {
             // Discover SmartClassroom Service
             appendOutput("Discovering SmartClassroom Service...");
-            ServiceDiscovery classroomDiscovery = new ServiceDiscovery(CLASSROOM_SERVICE_TYPE, CLASSROOM_SERVICE_NAME);
-            classroomDiscovery.discoverService(DISCOVERY_TIMEOUT);
+            ServiceDiscovery classroomDiscovery = new ServiceDiscovery(classroomServiceType, classroomServiceName);
+            classroomDiscovery.discoverService(discoveryTimeout);
 
             if (classroomDiscovery.getPort() != -1) {
                 String address = classroomDiscovery.getGrpcAddress();
                 appendOutput("SmartClassroom Service found at: " + address);
-                
+
                 classroomChannel = ManagedChannelBuilder.forTarget(address).usePlaintext().build();
-                
+
                 Metadata metadata = new Metadata();
                 metadata.put(Metadata.Key.of("client-id", Metadata.ASCII_STRING_MARSHALLER), "campus-client-001");
                 classroomStub = MetadataUtils.attachHeaders(SmartClassroomServiceGrpc.newStub(classroomChannel), metadata);
@@ -198,15 +195,15 @@ public class SmartCampusClientGUI extends JFrame {
 
             // Discover SmartLearningResource Service
             appendOutput("Discovering SmartLearningResource Service...");
-            ServiceDiscovery resourceDiscovery = new ServiceDiscovery(RESOURCE_SERVICE_TYPE, RESOURCE_SERVICE_NAME);
-            resourceDiscovery.discoverService(DISCOVERY_TIMEOUT);
+            ServiceDiscovery resourceDiscovery = new ServiceDiscovery(resourceServiceType, resourceServiceName);
+            resourceDiscovery.discoverService(discoveryTimeout);
 
             if (resourceDiscovery.getPort() != -1) {
                 String address = resourceDiscovery.getGrpcAddress();
                 appendOutput("SmartLearningResource Service found at: " + address);
-                
+
                 resourceChannel = ManagedChannelBuilder.forTarget(address).usePlaintext().build();
-                
+
                 Metadata metadata = new Metadata();
                 metadata.put(Metadata.Key.of("client-id", Metadata.ASCII_STRING_MARSHALLER), "campus-client-001");
                 resourceBlockingStub = MetadataUtils.attachHeaders(SmartLearningResourceServiceGrpc.newBlockingStub(resourceChannel), metadata);
@@ -218,15 +215,15 @@ public class SmartCampusClientGUI extends JFrame {
 
             // Discover SmartAssessment Service
             appendOutput("Discovering SmartAssessment Service...");
-            ServiceDiscovery assessmentDiscovery = new ServiceDiscovery(ASSESSMENT_SERVICE_TYPE, ASSESSMENT_SERVICE_NAME);
-            assessmentDiscovery.discoverService(DISCOVERY_TIMEOUT);
+            ServiceDiscovery assessmentDiscovery = new ServiceDiscovery(assessmentServiceType, assessmentServiceName);
+            assessmentDiscovery.discoverService(discoveryTimeout);
 
             if (assessmentDiscovery.getPort() != -1) {
                 String address = assessmentDiscovery.getGrpcAddress();
                 appendOutput("SmartAssessment Service found at: " + address);
-                
+
                 assessmentChannel = ManagedChannelBuilder.forTarget(address).usePlaintext().build();
-                
+
                 Metadata metadata = new Metadata();
                 metadata.put(Metadata.Key.of("client-id", Metadata.ASCII_STRING_MARSHALLER), "campus-client-001");
                 assessmentBlockingStub = MetadataUtils.attachHeaders(SmartAssessmentServiceGrpc.newBlockingStub(assessmentChannel), metadata);
@@ -242,7 +239,6 @@ public class SmartCampusClientGUI extends JFrame {
             appendOutput("ERROR during service discovery: " + e.getMessage());
         }
     }
-
 
     /**
      * Upload Attendance Records - CLIENT STREAMING
@@ -340,7 +336,6 @@ public class SmartCampusClientGUI extends JFrame {
         }
     }
 
-
     /**
      * Check Resource Availability - UNARY
      */
@@ -351,7 +346,7 @@ public class SmartCampusClientGUI extends JFrame {
         try {
             ResourceRequest request = ResourceRequest.newBuilder().setResourceId(resourceId).build();
             ResourceStatus status = resourceBlockingStub.getResourceAvailability(request);
-            
+
             appendOutput("Resource Status:");
             appendOutput("  Available: " + status.getAvailable());
             appendOutput("  Location: " + status.getLocation());
@@ -395,7 +390,6 @@ public class SmartCampusClientGUI extends JFrame {
         resourceStub.streamAvailableResources(request, responseObserver);
     }
 
-
     /**
      * Get Assessment Details - UNARY
      */
@@ -406,7 +400,7 @@ public class SmartCampusClientGUI extends JFrame {
         try {
             AssessmentRequest request = AssessmentRequest.newBuilder().setAssessmentId(assessmentId).build();
             AssessmentInfo info = assessmentBlockingStub.getAssessmentDetails(request);
-            
+
             appendOutput("Assessment Information:");
             appendOutput("  Subject: " + info.getSubject());
             appendOutput("  Duration: " + info.getDurationMinutes() + " minutes");
@@ -549,7 +543,6 @@ public class SmartCampusClientGUI extends JFrame {
         }
     }
 
-
     /**
      * Append text to output area
      */
@@ -583,12 +576,11 @@ public class SmartCampusClientGUI extends JFrame {
         }
     }
 
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             SmartCampusClientGUI gui = new SmartCampusClientGUI();
             gui.setVisible(true);
-            
+
             // Add shutdown hook
             Runtime.getRuntime().addShutdownHook(new Thread(gui::shutdown));
         });
