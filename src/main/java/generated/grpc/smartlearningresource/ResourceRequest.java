@@ -5,7 +5,7 @@ package generated.grpc.smartlearningresource;
 
 /**
  * <pre>
- * Request to check a specific resource
+ *request to check a specific resource
  * </pre>
  *
  * Protobuf type {@code SmartLearningResourceGrpc.ResourceRequest}
@@ -276,7 +276,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Request to check a specific resource
+   *request to check a specific resource
    * </pre>
    *
    * Protobuf type {@code SmartLearningResourceGrpc.ResourceRequest}

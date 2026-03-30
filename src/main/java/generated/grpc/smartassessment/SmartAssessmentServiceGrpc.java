@@ -185,7 +185,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * UNARY (SIMPLE RPC)
-     * Retrieves details about a specific assessment.
+     * retrieves details about a specific assessment.
      * </pre>
      */
     public void getAssessmentDetails(generated.grpc.smartassessment.AssessmentRequest request,
@@ -196,7 +196,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * CLIENT STREAMING
-     * Streams multiple answers from a student exam submission and returns a final submission summary.
+     *streams multiple answers from a student exam submission and returns a final submission summary.
      * </pre>
      */
     public io.grpc.stub.StreamObserver<generated.grpc.smartassessment.AnswerSubmission> submitAssessmentAnswers(
@@ -207,7 +207,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * SERVER STREAMING
-     * Streams assessment results for administrative review.
+     *streams assessment results for administrative review.
      * </pre>
      */
     public void streamAssessmentResults(generated.grpc.smartassessment.ResultRequest request,
@@ -218,7 +218,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * BIDIRECTIONAL STREAMING
-     * Enables real-time exam monitoring and alert responses.
+     *enables real-time exam monitoring and alert responses.
      * </pre>
      */
     public io.grpc.stub.StreamObserver<generated.grpc.smartassessment.StudentActivity> liveAssessmentMonitoring(
@@ -281,7 +281,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * UNARY (SIMPLE RPC)
-     * Retrieves details about a specific assessment.
+     * retrieves details about a specific assessment.
      * </pre>
      */
     public void getAssessmentDetails(generated.grpc.smartassessment.AssessmentRequest request,
@@ -293,7 +293,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * CLIENT STREAMING
-     * Streams multiple answers from a student exam submission and returns a final submission summary.
+     *streams multiple answers from a student exam submission and returns a final submission summary.
      * </pre>
      */
     public io.grpc.stub.StreamObserver<generated.grpc.smartassessment.AnswerSubmission> submitAssessmentAnswers(
@@ -305,7 +305,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * SERVER STREAMING
-     * Streams assessment results for administrative review.
+     *streams assessment results for administrative review.
      * </pre>
      */
     public void streamAssessmentResults(generated.grpc.smartassessment.ResultRequest request,
@@ -317,7 +317,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * BIDIRECTIONAL STREAMING
-     * Enables real-time exam monitoring and alert responses.
+     *enables real-time exam monitoring and alert responses.
      * </pre>
      */
     public io.grpc.stub.StreamObserver<generated.grpc.smartassessment.StudentActivity> liveAssessmentMonitoring(
@@ -348,7 +348,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * UNARY (SIMPLE RPC)
-     * Retrieves details about a specific assessment.
+     * retrieves details about a specific assessment.
      * </pre>
      */
     public generated.grpc.smartassessment.AssessmentInfo getAssessmentDetails(generated.grpc.smartassessment.AssessmentRequest request) {
@@ -359,7 +359,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * SERVER STREAMING
-     * Streams assessment results for administrative review.
+     *streams assessment results for administrative review.
      * </pre>
      */
     public java.util.Iterator<generated.grpc.smartassessment.StudentResult> streamAssessmentResults(
@@ -390,7 +390,7 @@ public final class SmartAssessmentServiceGrpc {
     /**
      * <pre>
      * UNARY (SIMPLE RPC)
-     * Retrieves details about a specific assessment.
+     * retrieves details about a specific assessment.
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<generated.grpc.smartassessment.AssessmentInfo> getAssessmentDetails(

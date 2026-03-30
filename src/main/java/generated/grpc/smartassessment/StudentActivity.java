@@ -5,7 +5,7 @@ package generated.grpc.smartassessment;
 
 /**
  * <pre>
- * Activity message during monitoring
+ *activity message during monitoring
  * </pre>
  *
  * Protobuf type {@code SmartAssessmentGrpc.StudentActivity}
@@ -327,7 +327,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Activity message during monitoring
+   *activity message during monitoring
    * </pre>
    *
    * Protobuf type {@code SmartAssessmentGrpc.StudentActivity}

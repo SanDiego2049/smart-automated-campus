@@ -5,7 +5,7 @@ package generated.grpc.smartassessment;
 
 /**
  * <pre>
- * Message representing a student's answer submission
+ *message representing a student's answer submission
  * </pre>
  *
  * Protobuf type {@code SmartAssessmentGrpc.AnswerSubmission}
@@ -327,7 +327,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Message representing a student's answer submission
+   *message representing a student's answer submission
    * </pre>
    *
    * Protobuf type {@code SmartAssessmentGrpc.AnswerSubmission}

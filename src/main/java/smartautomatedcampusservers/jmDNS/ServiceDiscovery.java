@@ -19,45 +19,33 @@ import javax.jmdns.ServiceListener;
  */
 
 
-/**
- * ServiceDiscovery for gRPC clients using jmDNS.
- * 
- * gRPC clients use this utility to discover gRPC services on the local network.
- * Once discovered, clients can extract the host and port to create gRPC channels.
- */
+
+// ServiceDiscovery for gRPC clients using jmDNS.
+
 public class ServiceDiscovery {
     private String requiredServiceType;
     private String requiredServiceName;
     private JmDNS jmdns;
     private ServiceInfo discoveredServiceInfo;
 
-    /**
-     * Constructor for ServiceDiscovery
-     * 
-     * @param serviceType the gRPC service type to discover (e.g., _smartclassroom._tcp.local.)
-     * @param serviceName the gRPC service name to discover (e.g., SmartClassroomService)
-     */
+    
+    // Constructor
     public ServiceDiscovery(String serviceType, String serviceName) {
         this.requiredServiceType = serviceType;
         this.requiredServiceName = serviceName;
     }
 
-    /**
-     * Discovers a gRPC service on the local network
-     * 
-     * @param timeoutMilliseconds timeout for discovery in milliseconds
-     * @return ServiceInfo of the discovered gRPC service, or null if not found
-     * @throws InterruptedException if discovery is interrupted
-     */
+    
+    //discovers a gRPC service on the local network
     public ServiceInfo discoverService(long timeoutMilliseconds) throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
         
         try {
-            // Create a JmDNS instance
+            // create a JmDNS instance
             jmdns = JmDNS.create(InetAddress.getLocalHost());
             System.out.println("ServiceDiscovery: Searching for gRPC services at " + InetAddress.getLocalHost());
             
-            // Add a service listener for the required gRPC service type
+            //add a service listener for the required gRPC service type
             jmdns.addServiceListener(requiredServiceType, new ServiceListener() {
                 @Override
                 public void serviceAdded(ServiceEvent event) {
@@ -77,12 +65,12 @@ public class ServiceDiscovery {
                     
                     System.out.println("gRPC Service resolved: " + resolvedServiceName + " on port " + port);
                     
-                    // Check if this is the gRPC service we are looking for
+                    //check if this is the gRPC service we are looking for
                     if (resolvedServiceName.contains(requiredServiceName)) {
                         System.out.println("Found required gRPC service: " + resolvedServiceName);
                         discoveredServiceInfo = info;
                         
-                        // Service found - release the latch
+                        // service found
                         latch.countDown();
                     }
                 }
@@ -93,7 +81,7 @@ public class ServiceDiscovery {
             System.err.println("IOException during gRPC service discovery: " + e.getMessage());
         }
         
-        // Wait for gRPC service to be discovered or timeout
+        //wait for gRPC service to be discovered
         boolean discovered = latch.await(timeoutMilliseconds, TimeUnit.MILLISECONDS);
         
         if (discoveredServiceInfo != null) {
@@ -108,20 +96,14 @@ public class ServiceDiscovery {
         return discoveredServiceInfo;
     }
 
-    /**
-     * Get the port of the discovered gRPC service
-     * 
-     * @return gRPC server port number, or -1 if service not discovered
-     */
+    
+    // get the port of the discovered gRPC service
     public int getPort() {
         return discoveredServiceInfo != null ? discoveredServiceInfo.getPort() : -1;
     }
 
-    /**
-     * Get the host address of the discovered gRPC service
-     * 
-     * @return host address as string, or null if service not discovered
-     */
+   
+   // get the host address of the discovered gRPC service
     public String getHost() {
         if (discoveredServiceInfo != null && discoveredServiceInfo.getInetAddresses().length > 0) {
             return discoveredServiceInfo.getInetAddresses()[0].getHostAddress();
@@ -129,11 +111,8 @@ public class ServiceDiscovery {
         return null;
     }
 
-    /**
-     * Get the full address for creating a gRPC channel (host:port format)
-     * 
-     * @return address string in "host:port" format, or null if service not discovered
-     */
+    
+    //gets the full address for creating a gRPC channel (host:port format)
     public String getGrpcAddress() {
         if (discoveredServiceInfo != null && getHost() != null) {
             return getHost() + ":" + getPort();
@@ -141,11 +120,8 @@ public class ServiceDiscovery {
         return null;
     }
 
-    /**
-     * Close the JmDNS instance
-     * 
-     * @throws IOException if close fails
-     */
+    // Close the JmDNS instance
+
     public void close() throws IOException {
         if (jmdns != null) {
             jmdns.close();

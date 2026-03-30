@@ -5,7 +5,7 @@ package generated.grpc.smartassessment;
 
 /**
  * <pre>
- * Final submission summary
+ * final submission summary
  * </pre>
  *
  * Protobuf type {@code SmartAssessmentGrpc.SubmissionSummary}
@@ -254,7 +254,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Final submission summary
+   * final submission summary
    * </pre>
    *
    * Protobuf type {@code SmartAssessmentGrpc.SubmissionSummary}

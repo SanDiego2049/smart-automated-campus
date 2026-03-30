@@ -5,7 +5,7 @@ package generated.grpc.smartclassroom;
 
 /**
  * <pre>
- * Message sent by student during live session
+ * message sent by student during live session
  * </pre>
  *
  * Protobuf type {@code SmartClassroomGrpc.StudentQuestion}
@@ -327,7 +327,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Message sent by student during live session
+   * message sent by student during live session
    * </pre>
    *
    * Protobuf type {@code SmartClassroomGrpc.StudentQuestion}

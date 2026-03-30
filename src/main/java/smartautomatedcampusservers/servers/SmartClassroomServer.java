@@ -21,19 +21,19 @@ public class SmartClassroomServer extends SmartClassroomServiceGrpc.SmartClassro
     private static  String serviceType = "_smartclassroom._tcp.local.";
     private static  String serviceName = "SmartClassroomService";
 
-    // Metadata keys for simple metadata demonstration
+    // metadata keys for simple metadata demonstration
     private static Metadata.Key<String> clientIdKey = Metadata.Key.of("client-id", Metadata.ASCII_STRING_MARSHALLER);
 
     public static void main(String[] args) {
         SmartClassroomServer classroomServer = new SmartClassroomServer();
 
         try {
-            // Start gRPC server
+            // start gRPC server
             Server server = ServerBuilder.forPort(port).addService(classroomServer).build().start();
 
             System.out.println("SmartClassroom Server started on port " + port);
 
-            // Register service with jmDNS using ServiceRegistration utility
+            // register service with jmDNS using ServiceRegistration 
             ServiceRegistration registration = ServiceRegistration.getInstance();
             registration.registerService(serviceType, serviceName, port, "Smart Classroom Management Service");
 
@@ -41,7 +41,7 @@ public class SmartClassroomServer extends SmartClassroomServiceGrpc.SmartClassro
             System.out.println("Service Type: " + serviceType);
             System.out.println("Service Name: " + serviceName);
 
-            // Keep server running
+            // keep server running
             server.awaitTermination();
 
         } catch (IOException | InterruptedException e) {
@@ -50,7 +50,7 @@ public class SmartClassroomServer extends SmartClassroomServiceGrpc.SmartClassro
         }
     }
 
-    // CLIENT STREAMING: Upload attendance records
+    // Upload attendance records
     @Override
     public StreamObserver<AttendanceRecord> uploadAttendanceRecords(StreamObserver<AttendanceSummary> responseObserver) {
 
@@ -62,7 +62,7 @@ public class SmartClassroomServer extends SmartClassroomServiceGrpc.SmartClassro
 
             @Override
             public void onNext(AttendanceRecord record) {
-                // Check for cancellation
+                // check for cancellation
                 if (ctx.isCancelled()) {
                     isCancelled = true;
                     System.out.println("Request cancelled by client");
@@ -70,7 +70,7 @@ public class SmartClassroomServer extends SmartClassroomServiceGrpc.SmartClassro
                     return;
                 }
 
-                // Validate input
+                //validate input
                 if (record.getStudentId() == null || record.getStudentId().isEmpty()) {
                     responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Student ID cannot be empty").asRuntimeException());
                     return;
@@ -83,7 +83,7 @@ public class SmartClassroomServer extends SmartClassroomServiceGrpc.SmartClassro
             @Override
             public void onError(Throwable t) {
                 System.err.println("Error in attendance upload: " + t.getMessage());
-                // Error already handled by client
+                //wrror already handled by client
             }
 
             @Override
@@ -95,7 +95,7 @@ public class SmartClassroomServer extends SmartClassroomServiceGrpc.SmartClassro
                 try {
                     int totalStudents = attendanceList.size();
 
-                    // Simulate deadline check
+                    //simulate deadline check
                     if (totalStudents == 0) {
                         responseObserver.onError(Status.FAILED_PRECONDITION.withDescription("No attendance records received").asRuntimeException());
                         return;
@@ -115,7 +115,7 @@ public class SmartClassroomServer extends SmartClassroomServiceGrpc.SmartClassro
         };
     }
 
-    // BIDIRECTIONAL STREAMING: Live class interaction
+    //Live class interaction
     @Override
     public StreamObserver<StudentQuestion> liveClassInteraction(StreamObserver<LecturerReply> responseObserver) {
 
@@ -126,7 +126,7 @@ public class SmartClassroomServer extends SmartClassroomServiceGrpc.SmartClassro
 
             @Override
             public void onNext(StudentQuestion question) {
-                // Check for cancellation
+                // check for cancellation
                 if (ctx.isCancelled()) {
                     isCancelled = true;
                     System.out.println("Live session cancelled");
@@ -134,7 +134,7 @@ public class SmartClassroomServer extends SmartClassroomServiceGrpc.SmartClassro
                     return;
                 }
 
-                // Validate input - basic error handling
+                //validate input
                 if (question.getQuestionText() == null || question.getQuestionText().isEmpty()) {
                     LecturerReply errorReply = LecturerReply.newBuilder().setResponseText("ERROR: Question text cannot be empty").build();
                     responseObserver.onNext(errorReply);
@@ -144,10 +144,10 @@ public class SmartClassroomServer extends SmartClassroomServiceGrpc.SmartClassro
                 System.out.println("Question from Student " + question.getStudentId() + ": " + question.getQuestionText());
 
                 try {
-                    // Simulate processing delay
+                    // simulate processing delay
                     Thread.sleep(100);
 
-                    // Simulate lecturer response
+                    // simulate lecturer response
                     String replyText = "Thank you for your question, Student " + question.getStudentId() + ". Let me address: " + question.getQuestionText();
 
                     LecturerReply reply = LecturerReply.newBuilder().setResponseText(replyText).build();

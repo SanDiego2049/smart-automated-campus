@@ -5,7 +5,7 @@ package generated.grpc.smartassessment;
 
 /**
  * <pre>
- * Request to stream results
+ * request to stream results
  * </pre>
  *
  * Protobuf type {@code SmartAssessmentGrpc.ResultRequest}
@@ -276,7 +276,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Request to stream results
+   * request to stream results
    * </pre>
    *
    * Protobuf type {@code SmartAssessmentGrpc.ResultRequest}

@@ -23,22 +23,20 @@ import java.util.Date;
 import javax.swing.*;
 import smartautomatedcampusservers.jmDNS.ServiceDiscovery;
 
-/**
- * Client GUI for Smart Automated Campus Discovers and interacts with three gRPC
- * services: - SmartClassroomService - SmartLearningResourceService -
- * SmartAssessmentService
- */
+
+ //client GUI for Smart Automated Campus discovers and interacts with three gRPC
+
 public class SmartCampusClientGUI extends JFrame {
 
-    // Service discovery timeout
+    // service discovery timeout
     private static long discoveryTimeout = 10000;
 
-    // Service types for discovery
+    // service types for discovery
     private static String classroomServiceType = "_smartclassroom._tcp.local.";
     private static String resourceServiceType = "_smartlearningresource._tcp.local.";
     private static String assessmentServiceType = "_smartassessment._tcp.local.";
 
-    // Service names
+    // service names
     private static String classroomServiceName = "SmartClassroomService";
     private static String resourceServiceName = "SmartLearningResourceService";
     private static String assessmentServiceName = "SmartAssessmentService";
@@ -64,17 +62,17 @@ public class SmartCampusClientGUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Output area at the bottom
+        //output area at the bottom
         outputArea = new JTextArea(10, 80);
         outputArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(outputArea);
         scrollPane.setBorder(BorderFactory.createTitledBorder("Service Output"));
         add(scrollPane, BorderLayout.SOUTH);
 
-        // Tabbed pane for different services
+        // tabbed pane for different services
         tabbedPane = new JTabbedPane();
 
-        // Add service panels
+        //add service panels
         tabbedPane.addTab("Smart Classroom", createClassroomPanel());
         tabbedPane.addTab("Learning Resources", createResourcePanel());
         tabbedPane.addTab("Assessment", createAssessmentPanel());
@@ -85,9 +83,9 @@ public class SmartCampusClientGUI extends JFrame {
         discoverServices();
     }
 
-    /**
-     * Create the Smart Classroom service panel
-     */
+    
+     // Smart Classroom service panel
+     
     private JPanel createClassroomPanel() {
         JPanel panel = new JPanel(new GridLayout(2, 1, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -103,9 +101,9 @@ public class SmartCampusClientGUI extends JFrame {
         return panel;
     }
 
-    /**
-     * Create the Learning Resource service panel
-     */
+    
+     //Learning Resource service panel
+     
     private JPanel createResourcePanel() {
         JPanel panel = new JPanel(new GridLayout(2, 1, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -131,9 +129,9 @@ public class SmartCampusClientGUI extends JFrame {
         return panel;
     }
 
-    /**
-     * Create the Assessment service panel
-     */
+    
+     // Assessment service panel
+     
     private JPanel createAssessmentPanel() {
         JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -167,14 +165,14 @@ public class SmartCampusClientGUI extends JFrame {
         return panel;
     }
 
-    /**
-     * Discover all three gRPC services using jmDNS
-     */
+    
+    //Discover all three gRPC services using jmDNS
+     
     private void discoverServices() {
         appendOutput("\n=== Starting Service Discovery ===");
 
         try {
-            // Discover SmartClassroom Service
+            // discover SmartClassroom Service
             appendOutput("Discovering SmartClassroom Service...");
             ServiceDiscovery classroomDiscovery = new ServiceDiscovery(classroomServiceType, classroomServiceName);
             classroomDiscovery.discoverService(discoveryTimeout);
@@ -193,7 +191,7 @@ public class SmartCampusClientGUI extends JFrame {
             }
             classroomDiscovery.close();
 
-            // Discover SmartLearningResource Service
+            //Discover SmartLearningResource Service
             appendOutput("Discovering SmartLearningResource Service...");
             ServiceDiscovery resourceDiscovery = new ServiceDiscovery(resourceServiceType, resourceServiceName);
             resourceDiscovery.discoverService(discoveryTimeout);
@@ -213,7 +211,7 @@ public class SmartCampusClientGUI extends JFrame {
             }
             resourceDiscovery.close();
 
-            // Discover SmartAssessment Service
+            //fiscover SmartAssessment Service
             appendOutput("Discovering SmartAssessment Service...");
             ServiceDiscovery assessmentDiscovery = new ServiceDiscovery(assessmentServiceType, assessmentServiceName);
             assessmentDiscovery.discoverService(discoveryTimeout);
@@ -240,9 +238,9 @@ public class SmartCampusClientGUI extends JFrame {
         }
     }
 
-    /**
-     * Upload Attendance Records - CLIENT STREAMING
-     */
+    
+    //Upload Attendance Records
+    
     private void uploadAttendanceRecords() {
         appendOutput("\n--- Uploading Attendance Records (Client Streaming) ---");
 
@@ -287,9 +285,9 @@ public class SmartCampusClientGUI extends JFrame {
         }
     }
 
-    /**
-     * Live Class Interaction - BIDIRECTIONAL STREAMING
-     */
+    
+    // Live Class Interaction
+     
     private void startLiveClassInteraction() {
         appendOutput("\n--- Starting Live Class Session (Bidirectional Streaming) ---");
 
@@ -336,9 +334,9 @@ public class SmartCampusClientGUI extends JFrame {
         }
     }
 
-    /**
-     * Check Resource Availability - UNARY
-     */
+    
+    //Check Resource Availability
+    
     private void checkResourceAvailability(String resourceId) {
         appendOutput("\n--- Checking Resource Availability (Unary) ---");
         appendOutput("Resource ID: " + resourceId);
@@ -355,9 +353,9 @@ public class SmartCampusClientGUI extends JFrame {
         }
     }
 
-    /**
-     * Stream Available Resources - SERVER STREAMING
-     */
+   
+    //Stream Available Resources
+     
     private void streamAvailableResources(String category) {
         appendOutput("\n--- Streaming Available Resources (Server Streaming) ---");
         appendOutput("Category: " + category);
@@ -390,9 +388,9 @@ public class SmartCampusClientGUI extends JFrame {
         resourceStub.streamAvailableResources(request, responseObserver);
     }
 
-    /**
-     * Get Assessment Details - UNARY
-     */
+    
+    //Get Assessment Details
+     
     private void getAssessmentDetails(String assessmentId) {
         appendOutput("\n--- Getting Assessment Details (Unary) ---");
         appendOutput("Assessment ID: " + assessmentId);
@@ -409,9 +407,9 @@ public class SmartCampusClientGUI extends JFrame {
         }
     }
 
-    /**
-     * Submit Assessment Answers - CLIENT STREAMING
-     */
+    
+    // Submit Assessment Answers
+    
     private void submitAssessmentAnswers() {
         appendOutput("\n--- Submitting Assessment Answers (Client Streaming) ---");
 
@@ -461,9 +459,9 @@ public class SmartCampusClientGUI extends JFrame {
         }
     }
 
-    /**
-     * Stream Assessment Results - SERVER STREAMING
-     */
+   
+    // Stream Assessment Results
+     
     private void streamAssessmentResults(String assessmentId) {
         appendOutput("\n--- Streaming Assessment Results (Server Streaming) ---");
         appendOutput("Assessment ID: " + assessmentId);
@@ -493,9 +491,9 @@ public class SmartCampusClientGUI extends JFrame {
         assessmentStub.streamAssessmentResults(request, responseObserver);
     }
 
-    /**
-     * Live Assessment Monitoring - BIDIRECTIONAL STREAMING
-     */
+    
+    // Live Assessment Monitoring
+     
     private void startLiveMonitoring() {
         appendOutput("\n--- Starting Live Assessment Monitoring (Bidirectional Streaming) ---");
 
@@ -527,10 +525,7 @@ public class SmartCampusClientGUI extends JFrame {
             };
 
             for (String[] activity : activities) {
-                StudentActivity studentActivity = StudentActivity.newBuilder()
-                        .setActivityType(activity[0])
-                        .setTimestamp(activity[1])
-                        .build();
+                StudentActivity studentActivity = StudentActivity.newBuilder().setActivityType(activity[0]).setTimestamp(activity[1]).build();
                 requestObserver.onNext(studentActivity);
                 appendOutput("Logged activity: " + activity[0] + " at " + activity[1]);
                 Thread.sleep(1000);
@@ -543,9 +538,9 @@ public class SmartCampusClientGUI extends JFrame {
         }
     }
 
-    /**
-     * Append text to output area
-     */
+    
+     //append text to output area
+    
     private void appendOutput(String text) {
         SwingUtilities.invokeLater(() -> {
             outputArea.append(text + "\n");
@@ -553,17 +548,17 @@ public class SmartCampusClientGUI extends JFrame {
         });
     }
 
-    /**
-     * Get current timestamp
-     */
+    
+     //Get current timestamp
+    
     private String getCurrentTimestamp() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(new Date());
     }
 
-    /**
-     * Shutdown channels on exit
-     */
+    
+    // shutdown channels on exit
+     
     private void shutdown() {
         if (classroomChannel != null) {
             classroomChannel.shutdown();
@@ -581,7 +576,7 @@ public class SmartCampusClientGUI extends JFrame {
             SmartCampusClientGUI gui = new SmartCampusClientGUI();
             gui.setVisible(true);
 
-            // Add shutdown hook
+            //aadd shutdown hook
             Runtime.getRuntime().addShutdownHook(new Thread(gui::shutdown));
         });
     }

@@ -22,10 +22,10 @@ public class SmartLearningResourceServer extends SmartLearningResourceServiceGrp
     private static String serviceType = "_smartlearningresource._tcp.local.";
     private static String serviceName = "SmartLearningResourceService";
     
-    // Metadata keys for simple metadata demonstration
+    //metadata keys for simple metadata demonstration
     private static Metadata.Key<String> clientIdKey = Metadata.Key.of("client-id", Metadata.ASCII_STRING_MARSHALLER);
  
-    // Simulated resource database using ArrayList
+    // simulated resource database using ArrayList
     private static List<ResourceData> resourceDatabase = new ArrayList<>();
  
     static {
@@ -40,12 +40,12 @@ public class SmartLearningResourceServer extends SmartLearningResourceServiceGrp
         SmartLearningResourceServer resourceServer = new SmartLearningResourceServer();
  
         try {
-            // Start gRPC server
+            // start gRPC server
             Server server = ServerBuilder.forPort(port).addService(resourceServer).build().start();
  
             System.out.println("SmartLearningResource Server started on port " + port);
  
-            // Register service with jmDNS using ServiceRegistration utility
+            // register service with jmDNS using ServiceRegistration 
             ServiceRegistration registration = ServiceRegistration.getInstance();
             registration.registerService(serviceType, serviceName, port, "Smart Learning Resource Management Service");
  
@@ -53,7 +53,7 @@ public class SmartLearningResourceServer extends SmartLearningResourceServiceGrp
             System.out.println("Service Type: " + serviceType);
             System.out.println("Service Name: " + serviceName);
  
-            // Keep server running
+            // keep server running
             server.awaitTermination();
  
         } catch (IOException | InterruptedException e) {
@@ -62,14 +62,14 @@ public class SmartLearningResourceServer extends SmartLearningResourceServiceGrp
         }
     }
  
-    // UNARY: Get resource availability
+    //Get resource availability
     @Override
     public void getResourceAvailability(ResourceRequest request, StreamObserver<ResourceStatus> responseObserver) {
         
         Context ctx = Context.current();
         
         try {
-            // Check for cancellation
+            // heck for cancellation
             if (ctx.isCancelled()) {
                 System.out.println("Request cancelled");
                 responseObserver.onError(Status.CANCELLED.withDescription("Resource availability check cancelled").asRuntimeException());
@@ -79,13 +79,13 @@ public class SmartLearningResourceServer extends SmartLearningResourceServiceGrp
             String resourceId = request.getResourceId();
             System.out.println("Checking availability for resource: " + resourceId);
  
-            // Validate input
+            //validate input
             if (resourceId == null || resourceId.isEmpty()) {
                 responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Resource ID cannot be empty").asRuntimeException());
                 return;
             }
  
-            // Search for resource in ArrayList
+            //search for resource in ArrayList
             ResourceData data = null;
             for (ResourceData resource : resourceDatabase) {
                 if (resource.resourceId.equals(resourceId)) {
@@ -101,7 +101,7 @@ public class SmartLearningResourceServer extends SmartLearningResourceServiceGrp
                 
                 System.out.println("Response sent: Available = " + data.available + ", Location = " + data.location);
             } else {
-                // Resource not found - return NOT_FOUND status
+                // if resource not found
                 responseObserver.onError(Status.NOT_FOUND.withDescription("Resource ID '" + resourceId + "' not found in database").asRuntimeException());
                 return;
             }
@@ -115,7 +115,7 @@ public class SmartLearningResourceServer extends SmartLearningResourceServiceGrp
         }
     }
  
-    // SERVER STREAMING: Stream available resources by category
+    // Stream available resources by category
     @Override
     public void streamAvailableResources(CategoryRequest request, StreamObserver<ResourceInfo> responseObserver) {
         
@@ -125,24 +125,24 @@ public class SmartLearningResourceServer extends SmartLearningResourceServiceGrp
             String category = request.getCategory();
             System.out.println("Streaming resources for category: " + category);
  
-            // Validate input
+            //validate input
             if (category == null) {
                 responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Category cannot be null").asRuntimeException());
                 return;
             }
  
             int count = 0;
-            // Loop through ArrayList to find matching resources
+            // loop through ArrayList to find matching resources
             for (ResourceData data : resourceDatabase) {
                 
-                // Check for cancellation before each stream
+                //check for cancellation before each stream
                 if (ctx.isCancelled()) {
                     System.out.println("Streaming cancelled by client");
                     responseObserver.onError(Status.CANCELLED.withDescription("Resource streaming cancelled").asRuntimeException());
                     return;
                 }
                 
-                // Filter by category (simple simulation)
+                // filter by category
                 if (data.available && (category.isEmpty() || data.format.toLowerCase().contains(category.toLowerCase()))) {
                     ResourceInfo info = ResourceInfo.newBuilder().setTitle(data.title).setAuthor(data.author).setFormat(data.format).build();
  
@@ -172,7 +172,7 @@ public class SmartLearningResourceServer extends SmartLearningResourceServiceGrp
         }
     }
  
-    // Helper class to store resource data
+    //  class to store resource data
     private static class ResourceData {
         String resourceId;
         boolean available;

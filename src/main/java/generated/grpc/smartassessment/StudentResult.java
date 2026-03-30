@@ -5,7 +5,7 @@ package generated.grpc.smartassessment;
 
 /**
  * <pre>
- * Result message per student
+ * result message per student
  * </pre>
  *
  * Protobuf type {@code SmartAssessmentGrpc.StudentResult}
@@ -305,7 +305,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Result message per student
+   * result message per student
    * </pre>
    *
    * Protobuf type {@code SmartAssessmentGrpc.StudentResult}

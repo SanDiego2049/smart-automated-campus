@@ -5,7 +5,7 @@ package generated.grpc.smartassessment;
 
 /**
  * <pre>
- * Alert response from monitoring system
+ * alert response from monitoring system
  * </pre>
  *
  * Protobuf type {@code SmartAssessmentGrpc.MonitoringAlert}
@@ -276,7 +276,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Alert response from monitoring system
+   * alert response from monitoring system
    * </pre>
    *
    * Protobuf type {@code SmartAssessmentGrpc.MonitoringAlert}

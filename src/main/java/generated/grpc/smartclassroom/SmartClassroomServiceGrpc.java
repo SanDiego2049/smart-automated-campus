@@ -121,7 +121,7 @@ public final class SmartClassroomServiceGrpc {
     /**
      * <pre>
      * CLIENT STREAMING
-     * Streams multiple attendance records from a classroom scanner and returns a summary once all students have been marked present.
+     *streams multiple attendance records from a classroom scanner and returns a summary once all students have been marked present.
      * </pre>
      */
     public io.grpc.stub.StreamObserver<generated.grpc.smartclassroom.AttendanceRecord> uploadAttendanceRecords(
@@ -132,7 +132,7 @@ public final class SmartClassroomServiceGrpc {
     /**
      * <pre>
      * BIDIRECTIONAL STREAMING
-     * Enables real-time communication between students and lecturer during a live class session.
+     *enables real-time communication between students and lecturer during a live class session.
      * </pre>
      */
     public io.grpc.stub.StreamObserver<generated.grpc.smartclassroom.StudentQuestion> liveClassInteraction(
@@ -181,7 +181,7 @@ public final class SmartClassroomServiceGrpc {
     /**
      * <pre>
      * CLIENT STREAMING
-     * Streams multiple attendance records from a classroom scanner and returns a summary once all students have been marked present.
+     *streams multiple attendance records from a classroom scanner and returns a summary once all students have been marked present.
      * </pre>
      */
     public io.grpc.stub.StreamObserver<generated.grpc.smartclassroom.AttendanceRecord> uploadAttendanceRecords(
@@ -193,7 +193,7 @@ public final class SmartClassroomServiceGrpc {
     /**
      * <pre>
      * BIDIRECTIONAL STREAMING
-     * Enables real-time communication between students and lecturer during a live class session.
+     *enables real-time communication between students and lecturer during a live class session.
      * </pre>
      */
     public io.grpc.stub.StreamObserver<generated.grpc.smartclassroom.StudentQuestion> liveClassInteraction(

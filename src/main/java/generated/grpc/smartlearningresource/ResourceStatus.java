@@ -5,7 +5,7 @@ package generated.grpc.smartlearningresource;
 
 /**
  * <pre>
- * Response indicating availability and location
+ * response indicating availability and location
  * </pre>
  *
  * Protobuf type {@code SmartLearningResourceGrpc.ResourceStatus}
@@ -303,7 +303,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Response indicating availability and location
+   * response indicating availability and location
    * </pre>
    *
    * Protobuf type {@code SmartLearningResourceGrpc.ResourceStatus}

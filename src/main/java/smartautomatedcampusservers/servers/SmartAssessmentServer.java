@@ -21,10 +21,10 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
     private static String serviceType = "_smartassessment._tcp.local.";
     private static String serviceName = "SmartAssessmentService";
 
-    // Metadata keys for simple metadata demonstration
+    //metadata keys for simple metadata demonstration
     private static Metadata.Key<String> clientIdKey = Metadata.Key.of("client-id", Metadata.ASCII_STRING_MARSHALLER);
 
-    // Simulated assessment database using ArrayList
+    // simulated assessment database using ArrayList
     private static List<AssessmentData> assessmentDatabase = new ArrayList<>();
     private static List<StudentScore> studentScores = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
         assessmentDatabase.add(new AssessmentData("ASSESS002", "Computer Networks", 90));
         assessmentDatabase.add(new AssessmentData("ASSESS003", "Database Systems", 150));
 
-        // Pre-populated student scores for streaming results
+        // populated student scores for streaming results
         studentScores.add(new StudentScore("STU001", 85.5));
         studentScores.add(new StudentScore("STU002", 92.0));
         studentScores.add(new StudentScore("STU003", 78.5));
@@ -45,12 +45,12 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
         SmartAssessmentServer assessmentServer = new SmartAssessmentServer();
 
         try {
-            // Start gRPC server
+            // start gRPC server
             Server server = ServerBuilder.forPort(port).addService(assessmentServer).build().start();
 
             System.out.println("SmartAssessment Server started on port " + port);
 
-            // Register service with jmDNS using ServiceRegistration utility
+            // register service with jmDNS using ServiceRegistration utility
             ServiceRegistration registration = ServiceRegistration.getInstance();
             registration.registerService(serviceType, serviceName, port, "Smart Assessment Management Service");
 
@@ -58,7 +58,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
             System.out.println("Service Type: " + serviceType);
             System.out.println("Service Name: " + serviceName);
 
-            // Keep server running
+            // keep server running
             server.awaitTermination();
 
         } catch (IOException | InterruptedException e) {
@@ -67,14 +67,14 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
         }
     }
 
-    // UNARY: Get assessment details
+    //Get assessment details
     @Override
     public void getAssessmentDetails(AssessmentRequest request, StreamObserver<AssessmentInfo> responseObserver) {
 
         Context ctx = Context.current();
 
         try {
-            // Check for cancellation
+            //check for cancellation
             if (ctx.isCancelled()) {
                 System.out.println("Request cancelled");
                 responseObserver.onError(Status.CANCELLED.withDescription("Assessment details request cancelled").asRuntimeException());
@@ -84,13 +84,13 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
             String assessmentId = request.getAssessmentId();
             System.out.println("Fetching details for assessment: " + assessmentId);
 
-            // Validate input
+            //validate input
             if (assessmentId == null || assessmentId.isEmpty()) {
                 responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Assessment ID cannot be empty").asRuntimeException());
                 return;
             }
 
-            // Search for assessment in ArrayList
+            // search for assessment in ArrayList
             AssessmentData data = null;
             for (AssessmentData assessment : assessmentDatabase) {
                 if (assessment.assessmentId.equals(assessmentId)) {
@@ -100,7 +100,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
             }
 
             if (data == null) {
-                // Assessment not found
+                // asssessment not found
                 responseObserver.onError(Status.NOT_FOUND.withDescription("Assessment ID '" + assessmentId + "' not found in database").asRuntimeException());
                 return;
             }
@@ -117,7 +117,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
         }
     }
 
-    // CLIENT STREAMING: Submit assessment answers
+    //Submit assessment answers
     @Override
     public StreamObserver<AnswerSubmission> submitAssessmentAnswers(
             StreamObserver<SubmissionSummary> responseObserver) {
@@ -131,7 +131,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
 
             @Override
             public void onNext(AnswerSubmission answer) {
-                // Check for cancellation
+                //check for cancellation
                 if (ctx.isCancelled()) {
                     isCancelled = true;
                     System.out.println("Answer submission cancelled");
@@ -139,7 +139,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
                     return;
                 }
 
-                // Validate input
+                //validate input
                 if (answer.getQuestionId() == null || answer.getQuestionId().isEmpty()) {
                     responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Question ID cannot be empty").asRuntimeException());
                     return;
@@ -153,7 +153,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
                 System.out.println("Received answer for Question ID: " + answer.getQuestionId() + ", Answer: " + answer.getAnswerText());
                 answers.add(answer);
 
-                // Simulate scoring (random score between 0 and 10 per question)
+                //simulate scoring
                 double questionScore = Math.random() * 10;
                 totalScore += questionScore;
             }
@@ -190,7 +190,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
         };
     }
 
-    // SERVER STREAMING: Stream assessment results
+    //  Stream assessment results
     @Override
     public void streamAssessmentResults(ResultRequest request, StreamObserver<StudentResult> responseObserver) {
 
@@ -200,13 +200,13 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
             String assessmentId = request.getAssessmentId();
             System.out.println("Streaming results for assessment: " + assessmentId);
 
-            // Validate input
+            //validate input
             if (assessmentId == null || assessmentId.isEmpty()) {
                 responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Assessment ID cannot be empty").asRuntimeException());
                 return;
             }
 
-            // Check if assessment exists in ArrayList
+            //check if assessment exists in ArrayList
             boolean assessmentExists = false;
             for (AssessmentData assessment : assessmentDatabase) {
                 if (assessment.assessmentId.equals(assessmentId)) {
@@ -221,10 +221,10 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
             }
 
             int count = 0;
-            // Loop through ArrayList to stream student scores
+            // loop through ArrayList to stream student scores
             for (StudentScore score : studentScores) {
 
-                // Check for cancellation before each stream
+                //check for cancellation before each stream
                 if (ctx.isCancelled()) {
                     System.out.println("Results streaming cancelled");
                     responseObserver.onError(Status.CANCELLED.withDescription("Assessment results streaming cancelled").asRuntimeException());
@@ -237,7 +237,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
                 count++;
                 System.out.println("Streamed result: Student " + score.studentId + ", Score: " + score.score);
 
-                // Simulate streaming delay with deadline awareness
+                //simulate streaming delay with deadline awareness
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -254,7 +254,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
         }
     }
 
-    // BIDIRECTIONAL STREAMING: Live assessment monitoring
+    // Live assessment monitoring
     @Override
     public StreamObserver<StudentActivity> liveAssessmentMonitoring(
             StreamObserver<MonitoringAlert> responseObserver) {
@@ -266,7 +266,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
 
             @Override
             public void onNext(StudentActivity activity) {
-                // Check for cancellation
+                //check for cancellation
                 if (ctx.isCancelled()) {
                     isCancelled = true;
                     System.out.println("Monitoring session cancelled");
@@ -274,7 +274,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
                     return;
                 }
 
-                // Validate input
+                //validate input
                 if (activity.getActivityType() == null || activity.getActivityType().isEmpty()) {
                     MonitoringAlert errorAlert = MonitoringAlert.newBuilder().setAlertMessage("ERROR: Activity type cannot be empty").build();
                     responseObserver.onNext(errorAlert);
@@ -284,10 +284,10 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
                 System.out.println("Monitoring activity: " + activity.getActivityType() + " at " + activity.getTimestamp());
 
                 try {
-                    // Simulate processing delay
+                    // simulate processing delay
                     Thread.sleep(100);
 
-                    // Simulate alert generation based on activity type
+                    // simulate alert generation based on activity type
                     String alertMessage = "";
 
                     if (activity.getActivityType().toLowerCase().contains("suspicious")) {
@@ -322,7 +322,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
         };
     }
 
-    // Helper class to store assessment data
+    // class to store assessment data
     private static class AssessmentData {
 
         String assessmentId;
@@ -336,7 +336,7 @@ public class SmartAssessmentServer extends SmartAssessmentServiceGrpc.SmartAsses
         }
     }
 
-    // Helper class to store student scores
+    // class to store student scores
     private static class StudentScore {
 
         String studentId;

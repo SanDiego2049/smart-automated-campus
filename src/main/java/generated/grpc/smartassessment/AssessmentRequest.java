@@ -5,7 +5,7 @@ package generated.grpc.smartassessment;
 
 /**
  * <pre>
- * Request for assessment details
+ * request for assessment details
  * </pre>
  *
  * Protobuf type {@code SmartAssessmentGrpc.AssessmentRequest}
@@ -276,7 +276,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Request for assessment details
+   * request for assessment details
    * </pre>
    *
    * Protobuf type {@code SmartAssessmentGrpc.AssessmentRequest}

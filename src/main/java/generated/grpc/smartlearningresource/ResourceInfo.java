@@ -5,7 +5,7 @@ package generated.grpc.smartlearningresource;
 
 /**
  * <pre>
- * Information about a resource
+ * information about a resource
  * </pre>
  *
  * Protobuf type {@code SmartLearningResourceGrpc.ResourceInfo}
@@ -378,7 +378,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Information about a resource
+   * information about a resource
    * </pre>
    *
    * Protobuf type {@code SmartLearningResourceGrpc.ResourceInfo}

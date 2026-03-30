@@ -5,7 +5,7 @@ package generated.grpc.smartclassroom;
 
 /**
  * <pre>
- * Message representing a student attendance record
+ * message representing a student attendance record
  * </pre>
  *
  * Protobuf type {@code SmartClassroomGrpc.AttendanceRecord}
@@ -327,7 +327,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Message representing a student attendance record
+   * message representing a student attendance record
    * </pre>
    *
    * Protobuf type {@code SmartClassroomGrpc.AttendanceRecord}

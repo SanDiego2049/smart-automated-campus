@@ -5,7 +5,7 @@ package generated.grpc.smartclassroom;
 
 /**
  * <pre>
- * Summary response after attendance upload
+ *summary response after attendance upload
  * </pre>
  *
  * Protobuf type {@code SmartClassroomGrpc.AttendanceSummary}
@@ -251,7 +251,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Summary response after attendance upload
+   *summary response after attendance upload
    * </pre>
    *
    * Protobuf type {@code SmartClassroomGrpc.AttendanceSummary}

@@ -121,7 +121,7 @@ public final class SmartLearningResourceServiceGrpc {
     /**
      * <pre>
      * UNARY (SIMPLE RPC)
-     * Checks whether a specific resource is available.
+     * checks whether a specific resource is available.
      * </pre>
      */
     public void getResourceAvailability(generated.grpc.smartlearningresource.ResourceRequest request,
@@ -181,7 +181,7 @@ public final class SmartLearningResourceServiceGrpc {
     /**
      * <pre>
      * UNARY (SIMPLE RPC)
-     * Checks whether a specific resource is available.
+     * checks whether a specific resource is available.
      * </pre>
      */
     public void getResourceAvailability(generated.grpc.smartlearningresource.ResourceRequest request,
@@ -224,7 +224,7 @@ public final class SmartLearningResourceServiceGrpc {
     /**
      * <pre>
      * UNARY (SIMPLE RPC)
-     * Checks whether a specific resource is available.
+     * checks whether a specific resource is available.
      * </pre>
      */
     public generated.grpc.smartlearningresource.ResourceStatus getResourceAvailability(generated.grpc.smartlearningresource.ResourceRequest request) {
@@ -266,7 +266,7 @@ public final class SmartLearningResourceServiceGrpc {
     /**
      * <pre>
      * UNARY (SIMPLE RPC)
-     * Checks whether a specific resource is available.
+     * checks whether a specific resource is available.
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<generated.grpc.smartlearningresource.ResourceStatus> getResourceAvailability(
