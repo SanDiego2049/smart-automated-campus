@@ -23,7 +23,7 @@ Services use jmDNS for automatic discovery - no hardcoded IP addresses needed.
 
 ## Technology Stack
 
-- Java
+- Java 24.0.2
 - gRPC 1.15.1
 - Protocol Buffers 3.6.1
 - jmDNS 3.5.9
